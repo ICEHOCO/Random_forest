@@ -4,23 +4,29 @@
 #include "Dataprocess.h"	
 #include "RandomForest.h"
 
-#define TRAINNUM    200		//训练样本数
+//训练
+#define TRAINNUM    150		//训练样本数
 #define FEATURENUM  2		//特征点维数
+#define CLASSNUM    3		//分类结果数
+//测试
 #define TESTNUM		50		//测试样本数
+//树的设置
 #define TREENUM		100		//树的数量
 #define MAXDEPTH	5		//每棵树最大深度
+
 int main()
 {
 	vector<float> dataset;
 	vector<int> labelset;
-	//dataset = readData(TRAINNUM, true);
-	//labelset = readLabel(TRAINNUM, true);
-	//读取数据与标签
-	if (!ReadAll(&dataset, &labelset, TRAINNUM, true)) { system("pause"); return -1; };
-	//生成随机森林
+	//1、读取数据与标签
+	if (!ReadAll(&dataset, &labelset, TRAINNUM, false)) { system("pause"); return -1; };
+	float** DataSet = ReadData(false);
+	int* LabelSet = ReadLabel(false);
+	//2、生成随机森林
 	RandomForest* randomforest;
-	randomforest = new RandomForest(&dataset, &labelset, TREENUM, MAXDEPTH, TRAINNUM, 10, FEATURENUM);
-	
+	randomforest = new RandomForest(&dataset, &labelset, TREENUM, MAXDEPTH, TRAINNUM, 10, FEATURENUM, CLASSNUM);
+	//3、训练随机森林
+	randomforest->train();
 	
 	system("pause");
 

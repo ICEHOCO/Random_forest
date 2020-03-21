@@ -1,5 +1,51 @@
 #include "Dataprocess.h"
 
+
+float** ReadData(bool display)
+{
+	float** dataset = new float*[50];
+	for (int i = 0; i < 50; i++) {
+		dataset[i] = new float[2];
+		for (int j = 0; j < 2; j++) {
+			dataset[i][j] = i;
+		}
+	}
+
+	if (display) {
+		cout << "前10个数据集数据:" << endl;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 2; j++) {
+				cout << "x:"<<dataset[i][j]<<'\t';
+			}
+			cout << endl;
+		}
+	}
+
+	return dataset;
+}
+
+int* ReadLabel(bool display)
+{
+	int* labelset = new int[150];
+	for (int i = 0; i < 3; i++) {
+		int temp = i * 50;
+		for (int j = 0; j < 50; j++) {
+			labelset[temp + j] = i+1;
+		}
+	}
+
+	if (display) {
+		cout << "标签数据:" << endl;
+		for (int i = 0; i < 150; i++) {
+			cout << labelset[i] << '\t';
+		}
+		cout << endl;
+	}
+
+	return labelset;
+}
+
+
 vector<float> dateRandGenerate(int count)
 {
 	//初始化随机数种子
@@ -18,7 +64,7 @@ vector<int> labelRandGenerate(int count)
 	vector<int> OutLabelSet;
 	for (int i = 0; i < count; i++) {
 		//OutDataSet.push_back(rand()/float(RAND_MAX));
-		OutLabelSet.push_back(static_cast<float>(rand() % 3));
+		OutLabelSet.push_back(static_cast<int>(rand() % 3));
 	}
 	return OutLabelSet;
 }

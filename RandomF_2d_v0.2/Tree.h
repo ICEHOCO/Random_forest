@@ -10,8 +10,8 @@ public:
 	/*构造与析构*/
 	Tree() {};
 	Tree(vector<float>* dataset, vector<int>* labelset, int maxDepth,
-		int SampleNumPerTree, int minSampleNumPerNode, int featureNumSelected);
-	~Tree() {};
+		int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum);
+	~Tree();
 	/**训练与预测**/
 	void train();
 	int predict();
@@ -21,7 +21,8 @@ public:
 	int get_minSampleNumPerNode() { return this->minSampleNumPerNode; };
 	double get_AGini() { return this->AGini; }
 	/*功能函数*/
-	double calculateAGini();
+	void RootNodeInitial();
+	
 	//结点数组
 	vector<Node*> nodeArray;
 
@@ -30,6 +31,7 @@ private:
 	int nodeNum;
 	int SampleNumPerTree;
 	int minSampleNumPerNode;//每个结点最小样本数
+	int FeatureSelected;
 	double AGini;//所有叶子结点按权重算出的Gini系数
 };
 

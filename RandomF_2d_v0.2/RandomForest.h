@@ -10,11 +10,11 @@ public:
 	//构造函数
 	RandomForest() {};
 	RandomForest(vector<float>* dataset, vector<int>* labelset, int TreeNum,
-		int maxDepth, int SampleNumPerTree, int minSampleNumPerNode, int featureNumSelected);
+		int maxDepth, int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum);
 	//析构函数
-	~RandomForest() {};
+	~RandomForest();
 	//训练函数
-	void train(Sample sample);//要对树初始化
+	void train();
 	//预测函数
 	int predict();
 	/*成员变量获取函数*/

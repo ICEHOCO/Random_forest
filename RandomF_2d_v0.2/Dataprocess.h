@@ -4,12 +4,17 @@
 
 #include "stdafx.h"
 
-#define DATAHAVE 200 
-#define LABELHAVE 200
+#define DATAHAVE 150 
+#define LABELHAVE 150
+
+/***********************************/
+float** ReadData(bool display);
+int* ReadLabel(bool display);
+/***********************************/
 
 vector<float> dateRandGenerate(int count);
 vector<int> labelRandGenerate(int count);
-static const vector<float> DataSet = dateRandGenerate(DATAHAVE);//{1,2,3,4,5,6,7,8,9,10};
+static const vector<float> DataSet = dateRandGenerate(DATAHAVE);
 static const vector<int> LabelSet = labelRandGenerate(LABELHAVE);
 
 vector<float> readData(int NumtoRead, bool display);
