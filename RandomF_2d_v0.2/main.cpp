@@ -20,11 +20,11 @@ int main()
 	vector<int> labelset;
 	//1、读取数据与标签
 	if (!ReadAll(&dataset, &labelset, TRAINNUM, false)) { system("pause"); return -1; };
-	float** DataSet = ReadData(false);
+	float** DataSet = ReadData(true);
 	int* LabelSet = ReadLabel(false);
 	//2、生成随机森林
 	RandomForest* randomforest;
-	randomforest = new RandomForest(&dataset, &labelset, TREENUM, MAXDEPTH, TRAINNUM, 10, FEATURENUM, CLASSNUM);
+	randomforest = new RandomForest(DataSet, LabelSet, TREENUM, MAXDEPTH, TRAINNUM, 10, FEATURENUM, CLASSNUM);
 	//3、训练随机森林
 	randomforest->train();
 	

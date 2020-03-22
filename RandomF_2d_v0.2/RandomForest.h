@@ -9,7 +9,7 @@ class RandomForest {
 public:
 	//构造函数
 	RandomForest() {};
-	RandomForest(vector<float>* dataset, vector<int>* labelset, int TreeNum,
+	RandomForest(float** dataset, int* labelset, int TreeNum,
 		int maxDepth, int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum);
 	//析构函数
 	~RandomForest();

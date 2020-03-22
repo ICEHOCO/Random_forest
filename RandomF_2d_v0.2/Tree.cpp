@@ -1,6 +1,6 @@
 #include "Tree.h"
 
-Tree::Tree(vector<float>* dataset, vector<int>* labelset, int maxDepth, 
+Tree::Tree(float** dataset, int* labelset, int maxDepth, 
 	int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum)
 {
 	//赋值
@@ -36,9 +36,9 @@ void Tree::RootNodeInitial()
 	for (int i = 0; i < classNum; i++) { root->probArray[i] = 0; }
 	//统计个数
 	int* dataIndex = root->Nsample->SetIndex;
-	const vector<int>* labelset = root->Nsample->labelset;
+	const int* labelset = root->Nsample->labelset;
 	for (int i = 0; i < this->SampleNumPerTree; i++) {
-		root->probArray[ labelset[0][dataIndex[i]] ]++;
+		root->probArray[labelset[dataIndex[i]]]++;
 	}
 	//计算概率与Gini系数
 	double add_pi_2 = 0;

@@ -9,7 +9,7 @@ class Tree {
 public:
 	/*构造与析构*/
 	Tree() {};
-	Tree(vector<float>* dataset, vector<int>* labelset, int maxDepth,
+	Tree(float** dataset, int* labelset, int maxDepth,
 		int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum);
 	~Tree();
 	/**训练与预测**/

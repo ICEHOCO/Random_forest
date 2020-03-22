@@ -8,7 +8,7 @@
 class Node {
 public:
 	Node() {};
-	Node(vector<float>* dataset, vector<int>* labelset, int classNum, double NGini,
+	Node(float** dataset, int* labelset, int classNum, double NGini,
 		bool isLeaf, int featureNumSelected);
 	~Node();
 	/*获取成员变量函数*/

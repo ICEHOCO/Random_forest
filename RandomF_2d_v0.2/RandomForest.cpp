@@ -1,8 +1,8 @@
 #include "Randomforest.h"
 //随机森林 类成员函数的定义
 
-RandomForest::RandomForest(vector<float>* dataset, vector<int>* labelset, int TreeNum, 
-	int maxDepth, int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum)
+RandomForest::RandomForest(float** dataset, int* labelset, int TreeNum, int maxDepth,
+	int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum)
 {
 	this->TreeNum = TreeNum;
 	//初始化树   

@@ -1,6 +1,6 @@
 #include "Node.h"
 
-Node::Node(vector<float>* dataset, vector<int>* labelset, int classNum, double NGini, 
+Node::Node(float** dataset, int* labelset, int classNum, double NGini, 
 	bool isLeaf, int featureNumSelected)
 {
 	//让节点获取总样本, 但未获得样本索引！！
@@ -48,10 +48,10 @@ void Node::calculateInfoGain()
 		*/
 		//排序结束后，Sample->SetIndex 是排序好的，根据当前特征点的值
 		//让右孩子结点拿到所有排序好的索引
-		const vector<int>* labelset = Nsample->labelset;
+		const int* labelset = Nsample->labelset;
 		int* SetIndex = Nsample->SetIndex;
-		for (int j = 0; j < labelset->size(); j++) {
-			F_RprobArray[ labelset[0][SetIndex[j]] ]++;
+		for (int j = 0; j < sampleNum; j++) {
+			F_RprobArray[ labelset[SetIndex[j]] ]++;
 		}
 		//2.2、获取当前特征值下， 最优分隔点 及 相关信息
 		//不考虑所有样本在一个孩子结点下的情况， 因为那时信息增益为 0 
@@ -62,8 +62,8 @@ void Node::calculateInfoGain()
 			int LWeight = j + 1;
 			int RWeight = sampleNum - j - 1;
 			//先拿样本到左边， 再计算
-			F_LprobArray[labelset[0][SetIndex[j]]]++;
-			F_RprobArray[labelset[0][SetIndex[j]]]--;
+			F_LprobArray[labelset[SetIndex[j]]]++;
+			F_RprobArray[labelset[SetIndex[j]]]--;
 			//左孩子Gini
 			double add_pi_2 = 0;
 			for (int k = 0; k < classNum; k++) {
