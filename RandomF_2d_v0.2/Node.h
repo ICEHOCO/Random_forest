@@ -31,7 +31,7 @@ private:
 	bool isLeaf;
 	double NGini;
 	int FeatureID;//当前结点选择的特征点
-	float FeatureValue;
+	float FeatureValue;	//叶子节点无特征值
 };
 
 #endif // !NODE_H

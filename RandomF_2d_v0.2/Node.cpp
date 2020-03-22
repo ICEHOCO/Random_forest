@@ -20,8 +20,10 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 	int* SetIndex = Nsample->SetIndex;
 	int featureNum = Nsample->featureNum;
 	//1、声明全局最优变量
-	int splitPoint = 0;
 	FeatureID = Nsample->FeatureIndex[0];
+	FeatureValue = 0;
+	//
+	int splitPoint = 0;
 	int maxInfoGain = -1;	//最大信息增益 = NGini - LSnum * LGini - RSnum * RGini 
 	double LGini = 1;	//左孩子Gini系数
 	double* LprobArray;	//左孩子的概率数组:统计个数，计算概率，计算Gini
@@ -31,6 +33,7 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 	//2.1、声明当前特征下最优变量
 	int F_splitPoint = 0;
 	int F_featureID = 0;
+	float F_featureValue = 0;
 	int F_maxInfoGain = -1;	//最大信息增益 = NGini - LSnum * LGini - RSnum * RGini 
 	double F_LGini = 1.0;	//左孩子Gini系数
 	double* F_LprobArray = new double[classNum];	//左孩子的概率数组:统计个数，计算概率，计算Gini
@@ -73,14 +76,14 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 			//左孩子Gini
 			double add_pi_2 = 0;
 			for (int k = 0; k < classNum; k++) {
-				double pi = (lprobarray[i] / LWeight);
+				double pi = (lprobarray[k] / LWeight);
 				add_pi_2 += pi * pi;
 			}
 			int lgini = 1 - add_pi_2;
 			//右孩子Gini
 			add_pi_2 = 0;
 			for (int k = 0; k < classNum; k++) {
-				double pi = (rprobarray[i] / RWeight);
+				double pi = (rprobarray[k] / RWeight);
 				add_pi_2 += pi * pi;
 			}
 			int rgini = 1 - add_pi_2;
@@ -92,6 +95,7 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 				F_maxInfoGain = curInfoGain;
 				F_splitPoint = j;//分裂点
 				F_featureID = Nsample->FeatureIndex[ i ];
+				F_featureValue = Nsample->dataset[ SetIndex[j] ][i];
 				F_LGini = lgini;
 				F_RGini = rgini;
 				for (int k = 0; k < classNum; k++) {
@@ -106,6 +110,7 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 			maxInfoGain = F_maxInfoGain;
 			splitPoint = F_splitPoint;
 			FeatureID = F_featureID;
+			FeatureValue = F_featureValue;
 			LGini = F_LGini;
 			RGini = F_RGini;
 			LprobArray = F_LprobArray;
@@ -116,8 +121,6 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 	delete[] rprobarray;
 	//3、构造孩子结点实例，注意变量的初始化
 	//q_sort(Nsample->SetIndex, Compare); featureIndex[FeatureID]
-	//Node(float** dataset, int* labelset, int classNum, double NGini,
-	//	bool isLeaf, int featureNum);
 	nodeArray[0][curPos*2+1] = new Node(dataset, labelset, classNum, LGini, false, featureNum);//左
 	nodeArray[0][curPos*2+1]->Nsample->ReadFromFatherSetIndex(Nsample->SetIndex, 0, splitPoint + 1);
 	nodeArray[0][curPos*2+2] = new Node(dataset, labelset, classNum, RGini, false, featureNum);//右
@@ -136,7 +139,10 @@ void Node::releaseIndex()
 
 void Node::set_AsaLeafNode()
 {
-
+	isLeaf = true;
+	//以下两数值在叶子结点当中无意义，仅作初始化用。
+	FeatureValue = -1;
+	FeatureID = -1;
 }
 
 Node::~Node()
