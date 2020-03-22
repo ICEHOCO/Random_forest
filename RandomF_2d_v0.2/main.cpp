@@ -29,6 +29,15 @@ int main()
 	randomforest->train();
 	
 	system("pause");
+	
+	//ÊÍ·Å¿Õ¼ä£¬·ÀÖ¹ÄÚ´æĞ¹Â©
+	int point_num = TRAINNUM / FEATURENUM;
+	for (int i = 0; i < point_num; i++) {
+		delete[] DataSet[i];
+		DataSet[i] = NULL;
+	}
+	delete[] LabelSet;
+	LabelSet = NULL;
 
 	return 0;
 }

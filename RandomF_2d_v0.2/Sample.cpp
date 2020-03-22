@@ -22,6 +22,14 @@ void Sample::randomSelectFeatrue(int N)
 	}
 }
 
+void Sample::ReadFromFatherSetIndex(int* Indexarr, int start, int count)
+{
+	SetIndex = new int[count];
+	for (int i = 0; i < count; i++) {
+		SetIndex[i] = Indexarr[start + i];
+	}
+}
+
 Sample::~Sample()
 {
 	delete[] SetIndex;

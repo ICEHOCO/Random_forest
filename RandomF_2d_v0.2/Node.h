@@ -9,7 +9,7 @@ class Node {
 public:
 	Node() {};
 	Node(float** dataset, int* labelset, int classNum, double NGini,
-		bool isLeaf, int featureNumSelected);
+		bool isLeaf, int featureNum);
 	~Node();
 	/*获取成员变量函数*/
 	bool get_isLeaf() { return this->isLeaf; }
@@ -20,7 +20,7 @@ public:
 	void set_isLeaf(bool isLeaf) { this->isLeaf = isLeaf; return; }
 	/*功能函数*/
 	void set_AsaLeafNode();
-	void calculateInfoGain();
+	void calculateInfoGain(vector<Node*>* nodeArray, int curPos);
 	void releaseIndex();
 	//当前结点所持有的样本
 	Sample* Nsample;
@@ -30,6 +30,8 @@ private:
 	int classNum;
 	bool isLeaf;
 	double NGini;
+	int FeatureID;//当前结点选择的特征点
+	float FeatureValue;
 };
 
 #endif // !NODE_H

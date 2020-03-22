@@ -15,7 +15,7 @@ public:
 	/*功能函数*/
 	void randomSelectData(int N);
 	void randomSelectFeatrue(int N);
-
+	void ReadFromFatherSetIndex(int* Indexarr, int start, int count);
 	//const：常量指针 不改变数据集
 	//const vector<float>* dataset;
 	//const vector<int>* labelset;

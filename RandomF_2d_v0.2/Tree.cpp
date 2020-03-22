@@ -36,7 +36,7 @@ void Tree::RootNodeInitial()
 	for (int i = 0; i < classNum; i++) { root->probArray[i] = 0; }
 	//统计个数
 	int* dataIndex = root->Nsample->SetIndex;
-	const int* labelset = root->Nsample->labelset;
+	int* labelset = root->Nsample->labelset;
 	for (int i = 0; i < this->SampleNumPerTree; i++) {
 		root->probArray[labelset[dataIndex[i]]]++;
 	}
@@ -75,7 +75,7 @@ void Tree::train()
 				//随机选择特征点（!当前全选!）
 				nodeArray[i]->Nsample->randomSelectFeatrue( FeatureSelected );
 				//计算信息增益
-				nodeArray[i]->calculateInfoGain();
+				nodeArray[i]->calculateInfoGain(&nodeArray, i);
 				//释放 当前结点 索引所占用的空间
 				nodeArray[i]->releaseIndex();
 			}
