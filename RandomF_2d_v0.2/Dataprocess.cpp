@@ -1,22 +1,38 @@
 #include "Dataprocess.h"
+#include "fstream"
 
-
-float** ReadData(bool display)
+float** ReadData(bool display, bool* success)
 {
+	fstream datafile("dataset.txt");
 	float** dataset = new float*[150];
 	for (int i = 0; i < 150; i++) {
 		dataset[i] = new float[2];
-		for (int j = 0; j < 2; j++) {
-			dataset[i][j] = i;
+		if (!datafile.eof())
+			datafile >> dataset[i][0];
+		else {
+			datafile.close();
+			cout << "数据读取失败" << endl;
+			cout << "位置："<< i<<":"<< 1 << endl;
+			*success = false;
+			return NULL;
+		}
+		if (!datafile.eof())
+			datafile >> dataset[i][1];
+		else {
+			datafile.close();
+			cout << "数据读取失败" << endl;
+			cout << "位置：" << i << ":" << 2 << endl;
+			*success = false;
+			return NULL;
 		}
 	}
-
+	datafile.close();
+	*success = true;
 	if (display) {
 		cout << "前10个数据集数据:" << endl;
 		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 2; j++) {
-				cout << "x:"<<dataset[i][j]<<'\t';
-			}
+			cout << "x:" << dataset[i][0] << '\t';
+			cout << "y:" << dataset[i][1] << '\t';
 			cout << endl;
 		}
 	}

@@ -50,6 +50,7 @@ void Tree::RootNodeInitial()
 		add_pi_2 += p * p;
 	}
 	root->set_NGini(1 - add_pi_2);
+	delete[] probArray;
 
 	return;
 }
@@ -67,7 +68,7 @@ void Tree::train()
 		//判断父结点是否为叶子
 		if (nodeArray[parentPos]->get_isLeaf()) { continue; }
 		//判断自身是否为叶子
-		if ( (i * 2 + 1) > nodeNum) {
+		if ( (i * 2 + 1) >= nodeNum) {
 			//注意！当前结点如果存在父结点且父结点不为叶子
 			//那么当前结点就一定被创建了  实例 ！！
 			nodeArray[i]->set_AsaLeafNode();

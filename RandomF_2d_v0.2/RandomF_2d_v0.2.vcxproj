@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="dataset.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -17,29 +17,37 @@
 
 int main()
 {
-	vector<float> dataset;
-	vector<int> labelset;
-	//1、读取数据与标签
-	if (!ReadAll(&dataset, &labelset, TRAINNUM, false)) { system("pause"); return -1; };
-	float** DataSet = ReadData(true);
+	//vector<float> dataset;
+	//vector<int> labelset;
+	////1、读取数据与标签
+	//if (!ReadAll(&dataset, &labelset, TRAINNUM, false)) { system("pause"); return -1; };
+		//初始化随机数种子
+	srand(static_cast<unsigned int>(time(NULL)));
+	bool readFlag = false;
+	float** DataSet = ReadData(false, &readFlag);
+	if (readFlag == false) {
+		system("pause");
+		return -1 ;
+	}
 	int* LabelSet = ReadLabel(false);
 	//2、生成随机森林
-	const int minSamplePerNode = 10;//必须小于样本总数
+	const int minSamplePerNode = 15;//必须小于样本总数
 	RandomForest* randomforest;
 	randomforest = new RandomForest(DataSet, LabelSet, TREENUM, MAXDEPTH, TRAINNUM, minSamplePerNode, FEATURENUM, CLASSNUM);
 	//3、训练随机森林
 	randomforest->train();
 	
+	//4、
+
 	system("pause");
 	
 	//释放空间，防止内存泄漏
+	delete randomforest;
 	for (int i = 0; i < TRAINNUM; i++) {
 		delete[] DataSet[i];
-		DataSet[i] = NULL;
 	}
 	delete[] LabelSet;
-	LabelSet = NULL;
-
+	system("pause");
 	return 0;
 }
 

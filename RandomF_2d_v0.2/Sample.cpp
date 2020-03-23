@@ -1,8 +1,7 @@
 #include "Sample.h"
 void Sample::randomSelectData(int N)
 {
-	//初始化随机数种子
-	srand(static_cast<unsigned int>(time(NULL)));
+//随机数种子已初始化
 	SetIndex = new int[N];
 	for (int i = 0; i < N; i++) {
 		SetIndex[i] = rand() % N;

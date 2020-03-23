@@ -8,7 +8,7 @@
 #define LABELHAVE 150
 
 /***********************************/
-float** ReadData(bool display);
+float** ReadData(bool display, bool* success);
 int* ReadLabel(bool display);
 /***********************************/
 

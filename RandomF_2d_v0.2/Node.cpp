@@ -84,7 +84,7 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 				F_maxInfoGain = curInfoGain;
 				F_splitPoint = j;//·ÖÁÑµã
 				F_featureID = Nsample->FeatureIndex[ i ];
-				F_featureValue = Nsample->dataset[ SetIndex[j] ][i];
+				F_featureValue = Nsample->dataset[ SetIndex[j] ][F_featureID];
 				F_LGini = lgini;
 				F_RGini = rgini;
 			}
