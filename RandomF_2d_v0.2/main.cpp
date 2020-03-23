@@ -36,7 +36,7 @@ int main()
 	randomforest = new RandomForest(DataSet, LabelSet, TREENUM, MAXDEPTH, TRAINNUM, minSamplePerNode, FEATURENUM, CLASSNUM);
 	//3、训练随机森林
 	randomforest->train();
-	
+
 	//4、预测
 	float** TestDataSet;//从文件中读取测试数据集
 	int* testLabel;
@@ -44,11 +44,11 @@ int main()
 	for (int i = 0; i < TESTNUM; i++) {
 		TestDataSet[i] = new float[FEATURENUM];
 	}
-	TestDataSet[0][0] = 0;
-	TestDataSet[0][1] = 0;
+	//TestDataSet[0][0] = -1;
+	//TestDataSet[0][1] = -1;
 
-	testLabel = randomforest->predict(TestDataSet, TESTNUM);
-	for (int i = 0; i < TESTNUM; i++) {
+	testLabel = randomforest->predict(DataSet, TRAINNUM);
+	for (int i = 0; i < TRAINNUM; i++) {
 		cout << "第" << i << "个样本的预测结果为：" << testLabel[i] << endl;
 	}
 	system("pause");
