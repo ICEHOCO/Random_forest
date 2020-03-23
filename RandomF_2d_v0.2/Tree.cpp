@@ -27,25 +27,26 @@ Tree::~Tree()
 void Tree::RootNodeInitial()
 {
 	Node* root = nodeArray[0];
+	int classNum = root->get_classNum();
+	int* probArray = new int[classNum];
 	//根节点样本数
 	root->Nsample->sampleNum = this->SampleNumPerTree;
 	//根节点！ 样本选择: 从数据集中 有放回地！抽取 N 个样本
 	root->Nsample->randomSelectData(this->SampleNumPerTree);
 	//初始化 概率数组 以及 计算Gini系数
-	int classNum = root->get_classNum();
-	for (int i = 0; i < classNum; i++) { root->probArray[i] = 0; }
+	for (int i = 0; i < classNum; i++) { probArray[i] = 0; }
 	//统计个数
 	int* dataIndex = root->Nsample->SetIndex;
 	int* labelset = root->Nsample->labelset;
 	for (int i = 0; i < this->SampleNumPerTree; i++) {
-		root->probArray[labelset[dataIndex[i]]]++;
+		probArray[labelset[dataIndex[i]]]++;
 	}
 	//计算概率与Gini系数
 	double add_pi_2 = 0;
 	for (int i = 0; i < classNum; i++) {
-		double p = root->probArray[i];
+		double p = probArray[i];
 		p = p / this->SampleNumPerTree;
-		root->probArray[i] = p;
+		probArray[i] = p;
 		add_pi_2 += p * p;
 	}
 	root->set_NGini(1 - add_pi_2);
@@ -53,6 +54,10 @@ void Tree::RootNodeInitial()
 	return;
 }
 
+/*
+线性数据的情况下，会出现过(拟合？)
+训练时，当某个结点的Gini系数为0时，应设置该结点为叶子结点
+*/
 void Tree::train()
 {
  	for (int i = 0; i < nodeNum; i++) {

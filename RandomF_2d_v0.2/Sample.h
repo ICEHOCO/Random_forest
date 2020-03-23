@@ -8,7 +8,7 @@ class Sample {
 public:
 	/*构造与析构函数*/
 	Sample() {  }
-	Sample(float** dataset, int* labelset, int featureNumSelected)
+	Sample(float** dataset, int* labelset, int featureNum)
 		:dataset(dataset), labelset(labelset), featureNum(featureNum){	}
 	//析构， 重要！！ 防止内存泄漏
 	~Sample();

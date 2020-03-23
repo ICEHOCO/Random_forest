@@ -28,6 +28,8 @@ void Sample::ReadFromFatherSetIndex(int* Indexarr, int start, int count)
 	for (int i = 0; i < count; i++) {
 		SetIndex[i] = Indexarr[start + i];
 	}
+	//更新结点样本数
+	this->sampleNum = count;
 }
 
 Sample::~Sample()

@@ -3,8 +3,8 @@
 
 float** ReadData(bool display)
 {
-	float** dataset = new float*[50];
-	for (int i = 0; i < 50; i++) {
+	float** dataset = new float*[150];
+	for (int i = 0; i < 150; i++) {
 		dataset[i] = new float[2];
 		for (int j = 0; j < 2; j++) {
 			dataset[i][j] = i;
@@ -30,7 +30,7 @@ int* ReadLabel(bool display)
 	for (int i = 0; i < 3; i++) {
 		int temp = i * 50;
 		for (int j = 0; j < 50; j++) {
-			labelset[temp + j] = i+1;
+			labelset[temp + j] = i;
 		}
 	}
 

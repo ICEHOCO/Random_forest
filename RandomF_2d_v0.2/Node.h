@@ -5,6 +5,13 @@
 #include "stdafx.h"
 #include "Sample.h"
 
+struct Pair {
+	float data;
+	int dataIndex;
+};
+
+int compare(const void* a, const void* b);
+
 class Node {
 public:
 	Node() {};
@@ -22,6 +29,7 @@ public:
 	void set_AsaLeafNode();
 	void calculateInfoGain(vector<Node*>* nodeArray, int curPos);
 	void releaseIndex();
+	void sortByFeatureId(int FeatureId);
 	//当前结点所持有的样本
 	Sample* Nsample;
 	double* probArray;

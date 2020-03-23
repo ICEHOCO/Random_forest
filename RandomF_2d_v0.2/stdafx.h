@@ -13,7 +13,7 @@
 #include "iostream"
 #include "stdlib.h" //system("pause")
 #include "vector"
-#include "queue"
+#include "algorithm"
 
 using namespace std;
 // TODO:  在此处引用程序需要的其他头文件

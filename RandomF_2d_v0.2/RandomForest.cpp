@@ -7,7 +7,6 @@ RandomForest::RandomForest(float** dataset, int* labelset, int TreeNum, int maxD
 	this->TreeNum = TreeNum;
 	//³õÊ¼»¯Ê÷   
 	this->carTreeArray.resize(this->TreeNum);
-	//carTreeArray = new Tree[this->TreeNum * sizeof(Tree)];
 	for (int i = 0; i < TreeNum; i++) {
 		this->carTreeArray[i] = new Tree(dataset, labelset, maxDepth, SampleNumPerTree, 
 											minSampleNumPerNode, featureNum, classNum);

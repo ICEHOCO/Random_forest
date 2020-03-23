@@ -4,6 +4,7 @@
 #include "Dataprocess.h"	
 #include "RandomForest.h"
 
+
 //训练
 #define TRAINNUM    150		//训练样本数
 #define FEATURENUM  2		//特征点维数
@@ -23,16 +24,16 @@ int main()
 	float** DataSet = ReadData(true);
 	int* LabelSet = ReadLabel(false);
 	//2、生成随机森林
+	const int minSamplePerNode = 10;//必须小于样本总数
 	RandomForest* randomforest;
-	randomforest = new RandomForest(DataSet, LabelSet, TREENUM, MAXDEPTH, TRAINNUM, 10, FEATURENUM, CLASSNUM);
+	randomforest = new RandomForest(DataSet, LabelSet, TREENUM, MAXDEPTH, TRAINNUM, minSamplePerNode, FEATURENUM, CLASSNUM);
 	//3、训练随机森林
 	randomforest->train();
 	
 	system("pause");
 	
 	//释放空间，防止内存泄漏
-	int point_num = TRAINNUM / FEATURENUM;
-	for (int i = 0; i < point_num; i++) {
+	for (int i = 0; i < TRAINNUM; i++) {
 		delete[] DataSet[i];
 		DataSet[i] = NULL;
 	}
