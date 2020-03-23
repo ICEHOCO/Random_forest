@@ -14,7 +14,7 @@ public:
 	~Tree();
 	/**训练与预测**/
 	void train();
-	int predict();
+	void predict(float* testSet, double** resultProb);
 	/*成员变量获取函数*/
 	int get_maxdepth() { return this->maxDepth; }
 	int get_SampleNumPerTree() { return this->SampleNumPerTree; }

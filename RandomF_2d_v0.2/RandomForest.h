@@ -16,7 +16,7 @@ public:
 	//训练函数
 	void train();
 	//预测函数
-	int predict();
+	int* predict(float** testSet, int testNum);
 	/*成员变量获取函数*/
 	int get_TreeNum() { return this->TreeNum; }
 
@@ -25,6 +25,7 @@ public:
 private:
 	int TreeNum;
 	int predictResult;
+	int classNum;
 };
 
 #endif // !RANDOMFOREST_H

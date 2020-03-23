@@ -88,3 +88,26 @@ void Tree::train()
 		}
 	}
 }
+
+//输入一个向量，返回分类结果 0 - 2 三种
+void Tree::predict(float* testSet, double** resultProb)
+{
+	/*有个结点，判断结点值，一直往下走，结点为叶子，则输出结果
+	*/
+	int curPos = 0;
+	int classNum = nodeArray[0]->get_classNum();
+	while (!nodeArray[curPos]->get_isLeaf()) {
+		if (testSet[nodeArray[curPos]->get_featureId()] <= nodeArray[curPos]->get_featureValue()) {
+			//走到左结点
+			curPos = 2 * curPos + 1;
+		}
+		else
+			curPos = 2 * curPos + 2;//否则右结点
+	}
+	//走到叶子
+	for (int i = 0; i < classNum; i++)
+	{
+		resultProb[0][i] += nodeArray[curPos]->probArray[i];
+	}
+	return;
+}

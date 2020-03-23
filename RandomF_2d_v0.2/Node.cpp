@@ -84,7 +84,7 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 				F_maxInfoGain = curInfoGain;
 				F_splitPoint = j;//分裂点
 				F_featureID = Nsample->FeatureIndex[ i ];
-				F_featureValue = Nsample->dataset[ SetIndex[j] ][F_featureID];
+				F_featureValue = Nsample->dataset[ SetIndex[j] ][F_featureID];//预测时节点判断小于等于
 				F_LGini = lgini;
 				F_RGini = rgini;
 			}

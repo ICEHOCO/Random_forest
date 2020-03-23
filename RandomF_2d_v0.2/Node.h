@@ -22,6 +22,8 @@ public:
 	bool get_isLeaf() { return this->isLeaf; }
 	double get_NGini() { return this->NGini; }
 	int get_classNum() { return this->classNum; }
+	int get_featureId() { return this->FeatureID; }
+	float get_featureValue() { return this->FeatureValue; }
 	/*ÉèÖÃ*/
 	void set_NGini(double NGini) { this->NGini = NGini; return; }
 	void set_isLeaf(bool isLeaf) { this->isLeaf = isLeaf; return; }

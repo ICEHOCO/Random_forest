@@ -10,7 +10,7 @@
 #define FEATURENUM  2		//特征点维数
 #define CLASSNUM    3		//分类结果数
 //测试
-#define TESTNUM		50		//测试样本数
+#define TESTNUM		1		//测试样本数
 //树的设置
 #define TREENUM		100		//树的数量
 #define MAXDEPTH	5		//每棵树最大深度
@@ -31,14 +31,26 @@ int main()
 	}
 	int* LabelSet = ReadLabel(false);
 	//2、生成随机森林
-	const int minSamplePerNode = 15;//必须小于样本总数
+	const int minSamplePerNode = 10;//必须小于样本总数
 	RandomForest* randomforest;
 	randomforest = new RandomForest(DataSet, LabelSet, TREENUM, MAXDEPTH, TRAINNUM, minSamplePerNode, FEATURENUM, CLASSNUM);
 	//3、训练随机森林
 	randomforest->train();
 	
-	//4、
+	//4、预测
+	float** TestDataSet;//从文件中读取测试数据集
+	int* testLabel;
+	TestDataSet = new float* [TESTNUM];
+	for (int i = 0; i < TESTNUM; i++) {
+		TestDataSet[i] = new float[FEATURENUM];
+	}
+	TestDataSet[0][0] = 0;
+	TestDataSet[0][1] = 0;
 
+	testLabel = randomforest->predict(TestDataSet, TESTNUM);
+	for (int i = 0; i < TESTNUM; i++) {
+		cout << "第" << i << "个样本的预测结果为：" << testLabel[i] << endl;
+	}
 	system("pause");
 	
 	//释放空间，防止内存泄漏
