@@ -1,7 +1,7 @@
 #include "Tree.h"
 
 Tree::Tree(float** dataset, int* labelset, int maxDepth, 
-	int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum)
+	int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum, int RandFeatureNum)
 {
 	//赋值
 	this->maxDepth = maxDepth;
@@ -12,7 +12,7 @@ Tree::Tree(float** dataset, int* labelset, int maxDepth,
 	nodeNum = static_cast<int>( pow(2.0, maxDepth) - 1.0 );//深度 n 的 满二叉树的总结点数
 	nodeArray.resize(this->nodeNum);
 	//初始化根节点
-	nodeArray[0] = new Node(dataset, labelset, classNum, 1.0, false, featureNum);
+	nodeArray[0] = new Node(dataset, labelset, classNum, 1.0, false, featureNum, RandFeatureNum);
 	this->RootNodeInitial();
 }
 
@@ -51,7 +51,6 @@ void Tree::RootNodeInitial()
 	}
 	root->set_NGini(1 - add_pi_2);
 	delete[] probArray;
-
 	return;
 }
 
@@ -79,7 +78,7 @@ void Tree::train()
 			}
 			else {
 				//随机选择特征点（!当前全选!）
-				nodeArray[i]->Nsample->randomSelectFeatrue( FeatureSelected );
+				nodeArray[i]->Nsample->randomSelectFeatrue( nodeArray[i]->get_RandFeatureNum() );
 				//计算信息增益
 				nodeArray[i]->calculateInfoGain(&nodeArray, i);
 				//释放 当前结点 索引所占用的空间

@@ -1,29 +1,22 @@
 #include "Dataprocess.h"
 #include "fstream"
 
-float** ReadData(bool display, bool* success)
+float** ReadData(bool display, bool* success, int numofdata_to_read, int featurenum)
 {
-	fstream datafile("dataset.txt");
-	float** dataset = new float*[150];
-	for (int i = 0; i < 150; i++) {
-		dataset[i] = new float[2];
-		if (!datafile.eof())
-			datafile >> dataset[i][0];
-		else {
-			datafile.close();
-			cout << "数据读取失败" << endl;
-			cout << "位置："<< i<<":"<< 1 << endl;
-			*success = false;
-			return NULL;
-		}
-		if (!datafile.eof())
-			datafile >> dataset[i][1];
-		else {
-			datafile.close();
-			cout << "数据读取失败" << endl;
-			cout << "位置：" << i << ":" << 2 << endl;
-			*success = false;
-			return NULL;
+	fstream datafile("traindatasetNew.txt");
+	float** dataset = new float*[numofdata_to_read];
+	for (int i = 0; i < numofdata_to_read; i++) {
+		dataset[i] = new float[featurenum];
+		for (int j = 0; j < featurenum; j++) {
+			if (!datafile.eof())
+				datafile >> dataset[i][j];
+			else {
+				datafile.close();
+				cout << "数据读取失败" << endl;
+				cout << "位置：" << i << ":" << j+1 << endl;
+				*success = false;
+				return NULL;
+			}
 		}
 	}
 	datafile.close();
@@ -40,19 +33,22 @@ float** ReadData(bool display, bool* success)
 	return dataset;
 }
 
-int* ReadLabel(bool display)
+int* ReadLabel(bool display, int numofdata_to_read)
 {
-	int* labelset = new int[150];
-	for (int i = 0; i < 3; i++) {
-		int temp = i * 50;
-		for (int j = 0; j < 50; j++) {
-			labelset[temp + j] = i;
-		}
+	int* labelset = new int[numofdata_to_read];
+	for (int i = 0; i < 21; i++) {
+		labelset[i] = 0;
+	}
+	for (int i = 21; i < 61; i++) {
+		labelset[i] = 1;
+	}
+	for (int i = 61; i < 87; i++) {
+		labelset[i] = 2;
 	}
 
 	if (display) {
 		cout << "标签数据:" << endl;
-		for (int i = 0; i < 150; i++) {
+		for (int i = 0; i < 60; i++) {
 			cout << labelset[i] << '\t';
 		}
 		cout << endl;
@@ -60,6 +56,61 @@ int* ReadLabel(bool display)
 
 	return labelset;
 }
+
+float** ReadTestData(bool display, bool* success, int numofdata_to_read, int featurenum)
+{
+	fstream datafile("testdatasetNew.txt");
+	float** dataset = new float* [numofdata_to_read];
+	for (int i = 0; i < numofdata_to_read; i++) {
+		dataset[i] = new float[featurenum];
+		for (int j = 0; j < featurenum; j++) {
+			if (!datafile.eof())
+				datafile >> dataset[i][j];
+			else {
+				datafile.close();
+				cout << "数据读取失败" << endl;
+				cout << "位置：" << i << ":" << j + 1 << endl;
+				*success = false;
+				return NULL;
+			}
+		}
+	}
+	datafile.close();
+	*success = true;
+	if (display) {
+		cout << "前10个数据集数据:" << endl;
+		for (int i = 0; i < 5; i++) {
+			cout << "x:" << dataset[i][0] << '\t';
+			cout << "y:" << dataset[i][1] << '\t';
+			cout << endl;
+		}
+	}
+	return dataset;
+}
+int* ReadTestLabel(bool display, int numofdata_to_read)
+{
+	int* labelset = new int[numofdata_to_read];
+	for (int i = 0; i < 10; i++) {
+		labelset[i] = 0;
+	}
+	for (int i = 10; i < 30; i++) {
+		labelset[i] = 1;
+	}
+	for (int i = 30; i < 40; i++) {
+		labelset[i] = 2;
+	}
+
+	if (display) {
+		cout << "标签数据:" << endl;
+		for (int i = 0; i < numofdata_to_read; i++) {
+			cout << labelset[i] << '\t';
+		}
+		cout << endl;
+	}
+
+	return labelset;
+}
+
 
 
 vector<float> dateRandGenerate(int count)

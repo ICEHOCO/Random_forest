@@ -18,6 +18,26 @@ void Sample::randomSelectFeatrue(int N)
 	}
 	else {
 		//TODO:随机选择不重复的  特征点索引
+		FeatureIndex = new int[N];
+		for (int i = 0; i < N; i++) {
+			FeatureIndex[i] = -1;
+		}
+		for (int i = featureNum - N; i < featureNum; i++) {
+			int temp = rand() % i;
+			bool flag = false;
+			for (int j = 0; j < N; j++) {
+				if (temp == FeatureIndex[j]) {
+					flag = true;
+					break;
+				}
+			}
+			if (flag == true) {
+				FeatureIndex[i - featureNum + N] = i;
+			}
+			else
+				FeatureIndex[i - featureNum + N] = temp;
+		}
+		featureNum = N;
 	}
 }
 

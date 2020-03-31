@@ -16,9 +16,6 @@ public:
 	void randomSelectData(int N);
 	void randomSelectFeatrue(int N);
 	void ReadFromFatherSetIndex(int* Indexarr, int start, int count);
-	//const：常量指针 不改变数据集
-	//const vector<float>* dataset;
-	//const vector<int>* labelset;
 	float** dataset;
 	int* labelset;
 	//应该包含所有的索引，提供给结点或者树使用

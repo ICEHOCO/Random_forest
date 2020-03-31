@@ -10,7 +10,7 @@ public:
 	/*构造与析构*/
 	Tree() {};
 	Tree(float** dataset, int* labelset, int maxDepth,
-		int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum);
+		int SampleNumPerTree, int minSampleNumPerNode, int featureNum, int classNum, int RandFeatureNum);
 	~Tree();
 	/**训练与预测**/
 	void train();

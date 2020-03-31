@@ -8,8 +8,10 @@
 #define LABELHAVE 150
 
 /***********************************/
-float** ReadData(bool display, bool* success);
-int* ReadLabel(bool display);
+float** ReadData(bool display, bool* success, int numofdata_to_read, int featurenum);
+int* ReadLabel(bool display, int numofdata_to_read);
+float** ReadTestData(bool display, bool* success, int numofdata_to_read, int featurenum);
+int* ReadTestLabel(bool display, int numofdata_to_read);
 /***********************************/
 
 vector<float> dateRandGenerate(int count);

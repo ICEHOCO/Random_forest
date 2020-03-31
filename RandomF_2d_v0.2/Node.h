@@ -16,7 +16,7 @@ class Node {
 public:
 	Node() {};
 	Node(float** dataset, int* labelset, int classNum, double NGini,
-		bool isLeaf, int featureNum);
+		bool isLeaf, int featureNum, int RandFeatureNum);
 	~Node();
 	/*获取成员变量函数*/
 	bool get_isLeaf() { return this->isLeaf; }
@@ -24,6 +24,7 @@ public:
 	int get_classNum() { return this->classNum; }
 	int get_featureId() { return this->FeatureID; }
 	float get_featureValue() { return this->FeatureValue; }
+	int get_RandFeatureNum() { return this->RandFeatureNum; }
 	/*设置*/
 	void set_NGini(double NGini) { this->NGini = NGini; return; }
 	void set_isLeaf(bool isLeaf) { this->isLeaf = isLeaf; return; }
@@ -42,6 +43,7 @@ private:
 	double NGini;
 	int FeatureID;//当前结点选择的特征点
 	float FeatureValue;	//叶子节点无特征值
+	int RandFeatureNum;
 };
 
 #endif // !NODE_H

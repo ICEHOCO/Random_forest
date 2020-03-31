@@ -1,13 +1,14 @@
 #include "Node.h"
 
 Node::Node(float** dataset, int* labelset, int classNum, double NGini, 
-	bool isLeaf, int featureNum)
+	bool isLeaf, int featureNum, int RandFeatureNum)
 {
 	//让节点获取总样本, 但未获得样本索引！！
 	this->Nsample = new Sample(dataset, labelset, featureNum);
 	this->NGini = NGini;
 	this->isLeaf = isLeaf;
 	this->classNum = classNum;
+	this->RandFeatureNum = RandFeatureNum;
 	//this->probArray = new double[classNum];
 }
 
@@ -106,9 +107,9 @@ void Node::calculateInfoGain(vector<Node*>* nodeArray, int curPos)
 	//3、构造孩子结点实例，注意变量的初始化
 	//q_sort(Nsample->SetIndex, Compare); featureIndex[FeatureID]
 	sortByFeatureId(FeatureID);
-	nodeArray[0][curPos*2+1] = new Node(dataset, labelset, classNum, LGini, false, featureNum);//左
+	nodeArray[0][curPos*2+1] = new Node(dataset, labelset, classNum, LGini, false, featureNum, RandFeatureNum);//左
 	nodeArray[0][curPos*2+1]->Nsample->ReadFromFatherSetIndex(SetIndex, 0, splitPoint + 1);
-	nodeArray[0][curPos*2+2] = new Node(dataset, labelset, classNum, RGini, false, featureNum);//右
+	nodeArray[0][curPos*2+2] = new Node(dataset, labelset, classNum, RGini, false, featureNum, RandFeatureNum);//右
 	nodeArray[0][curPos*2+2]->Nsample->ReadFromFatherSetIndex(SetIndex, splitPoint + 1, sampleNum-splitPoint-1);
 }
 
@@ -129,7 +130,8 @@ void Node::sortByFeatureId(int FeatureId)
 	Pair* pair = new Pair[sampleNum];
 	for (int i = 0; i < sampleNum; i++) {
 		pair[i].dataIndex = SetIndex[i];
-		pair[i].data = Nsample->dataset[SetIndex[i]][Nsample->FeatureIndex[FeatureId]];
+		//pair[i].data = Nsample->dataset[SetIndex[i]][Nsample->FeatureIndex[FeatureId]];
+		pair[i].data = Nsample->dataset[SetIndex[i]][FeatureId];
 	}
 	qsort(pair, sampleNum, sizeof(Pair),compare);
 	for (int i = 0; i < sampleNum; i++) {
