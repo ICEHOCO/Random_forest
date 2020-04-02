@@ -8,6 +8,8 @@ Tree::Tree(float** dataset, int* labelset, int maxDepth,
 	this->SampleNumPerTree = SampleNumPerTree;
 	this->minSampleNumPerNode = minSampleNumPerNode;
 	this->FeatureSelected = featureNum;//有多少特征点要多少特征点
+	//每一棵树的权重初始为: 1
+	this->Weight = 1.0;
 	//结点数组初始化
 	nodeNum = static_cast<int>( pow(2.0, maxDepth) - 1.0 );//深度 n 的 满二叉树的总结点数
 	nodeArray.resize(this->nodeNum);
@@ -106,7 +108,33 @@ void Tree::predict(float* testSet, double** resultProb)
 	//走到叶子
 	for (int i = 0; i < classNum; i++)
 	{
-		resultProb[0][i] += nodeArray[curPos]->probArray[i];
+		resultProb[0][i] += Weight * nodeArray[curPos]->probArray[i];
 	}
 	return;
+}
+
+int Tree::predict(float* testSet)
+{
+	//有个结点，判断结点值，一直往下走，结点为叶子，则输出结果
+	int curPos = 0;
+	int classNum = nodeArray[0]->get_classNum();
+	while (!nodeArray[curPos]->get_isLeaf()) {
+		if (testSet[nodeArray[curPos]->get_featureId()] <= nodeArray[curPos]->get_featureValue()) {
+			//走到左结点
+			curPos = 2 * curPos + 1;
+		}
+		else
+			curPos = 2 * curPos + 2;//否则右结点
+	}
+	//走到叶子,取叶子结点最大值作为输出
+	double maxProb = nodeArray[curPos]->probArray[0];
+	int result = 0;
+	for (int i = 1; i < classNum; i++)
+	{
+		if (maxProb < nodeArray[curPos]->probArray[i]) {
+			maxProb = nodeArray[curPos]->probArray[i];
+			result = i;
+		}
+	}
+	return result;
 }

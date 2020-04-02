@@ -21,17 +21,21 @@ public:
 	~RandomForest();
 	//训练函数
 	void train();
+	//预-预测根据结果修改权重
+	void pre_predict(float** testSet, int* labelSet, int testNum);
+	void pre_predict(float** testSet, int* labelSet, int testNum, float alpha, float beta);
 	//预测函数
-	Result* RandomForest::predict(float** testSet, int testNum);
+	Result* predict(float** testSet, int testNum);
 	/*成员变量获取函数*/
 	int get_TreeNum() { return this->TreeNum; }
-
+	float get_AllWeight() { return this->AllWeight; }
 	vector<Tree*> carTreeArray;
 
 private:
 	int TreeNum;
 	int predictResult;
 	int classNum;
+	float AllWeight;
 };
 
 #endif // !RANDOMFOREST_H

@@ -6,6 +6,7 @@ RandomForest::RandomForest(float** dataset, int* labelset, int TreeNum, int maxD
 {
 	this->TreeNum = TreeNum;
 	this->classNum = classNum;
+	this->AllWeight = 1.0 * TreeNum;
 	//初始化树   
 	this->carTreeArray.resize(this->TreeNum);
 	for (int i = 0; i < TreeNum; i++) {
@@ -32,6 +33,47 @@ void RandomForest::train()
 	cout << "训练完成！" << endl;
 	return;
 }
+
+void RandomForest::pre_predict(float** testSet, int* labelSet, int testNum)
+{
+	for (int i = 0; i < testNum; i++) {
+		for (int j = 0; j < TreeNum; j++) {
+			if (labelSet[i] != carTreeArray[j]->predict(testSet[i])) {
+				carTreeArray[j]->Punish();
+			}
+			else {
+				carTreeArray[j]->Reward();
+			}
+		}
+	}
+	//更新森林总权重值
+	this->AllWeight = 0;
+	for (int i = 0; i < TreeNum; i++) {
+		this->AllWeight += carTreeArray[i]->get_Weight();
+	}
+}
+
+void RandomForest::pre_predict(float** testSet, int* labelSet, int testNum, float alpha, float beta)
+{
+	for (int i = 0; i < testNum; i++) {
+		for (int j = 0; j < TreeNum; j++) {
+			if (labelSet[i] != carTreeArray[j]->predict(testSet[i])) {
+				carTreeArray[j]->Punish(alpha);
+			}
+			else {
+				carTreeArray[j]->Reward(beta);
+			}
+		}
+	}
+	//更新森林总权重值
+	this->AllWeight = 0;
+	for (int i = 0; i < TreeNum; i++) {
+		this->AllWeight += carTreeArray[i]->get_Weight();
+	}
+}
+
+
+
 
 Result* RandomForest::predict(float** testSet, int testNum)
 {

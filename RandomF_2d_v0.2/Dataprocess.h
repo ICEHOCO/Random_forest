@@ -7,11 +7,31 @@
 #define DATAHAVE 150 
 #define LABELHAVE 150
 
+struct SMOTE_Set {
+	float** data;
+	int* label;
+	int length;
+};
+
+struct Split_Set {
+	float** data;
+	int* label;
+	int length;
+
+	float** pre_data;
+	int* pre_label;
+	int pre_length;
+};
+
 /***********************************/
 float** ReadData(bool display, bool* success, int numofdata_to_read, int featurenum);
 int* ReadLabel(bool display, int numofdata_to_read);
 float** ReadTestData(bool display, bool* success, int numofdata_to_read, int featurenum);
 int* ReadTestLabel(bool display, int numofdata_to_read);
+SMOTE_Set SMOTE(float** srcdata, int* srclabel, int length, int classnum, int featurenum);
+double Orladistance(float* A, float* B, int featurenum);
+void OutputDataFile(float** dataset);
+Split_Set PreSplit(float** srcdata, int* srclabel, int length, int classnum, int splitNum);
 /***********************************/
 
 vector<float> dateRandGenerate(int count);
